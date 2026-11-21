@@ -24,4 +24,4 @@ management:
         include: health
   endpoint:
     health:
-      show-details: always   # 仅本地；F7 上线前改为 when-authorized
+      show-details: always   # local dev；production need to change to when-authorized
