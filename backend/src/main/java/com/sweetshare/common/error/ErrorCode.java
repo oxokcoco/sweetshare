@@ -3,7 +3,7 @@ package com.sweetshare.common.error;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
-    UNAUTHENTICATED(HttpStatus.UNAUTHORIZED, "Login Required"),
+    UNAUTHENTICATED(HttpStatus.UNAUTHORIZED, "Login required"),
     CSRF_TOKEN_INVALID(HttpStatus.FORBIDDEN, "Missing or invalid CSRF token"),
     FORBIDDEN(HttpStatus.FORBIDDEN, "Access denied");
 

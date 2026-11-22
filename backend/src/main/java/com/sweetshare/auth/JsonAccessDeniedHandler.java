@@ -21,6 +21,7 @@ class JsonAccessDeniedHandler implements AccessDeniedHandler {
         this.errorResponseWriter = errorResponseWriter;
     }
 
+    @Override 
     public void handle(HttpServletRequest request,
             HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException {
