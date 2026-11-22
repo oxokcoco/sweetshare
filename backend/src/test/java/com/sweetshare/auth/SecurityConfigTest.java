@@ -41,4 +41,5 @@ class SecurityConfigTest {
         mockMvc.perform(post("/api/v1/posts").with(csrf()))
                 .andExpect(status().isUnauthorized());
     }
+
 }
