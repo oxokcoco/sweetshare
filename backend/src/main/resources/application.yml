@@ -25,3 +25,7 @@ management:
   endpoint:
     health:
       show-details: always   # local dev；production need to change to when-authorized
+
+# logging:
+#   level:
+#     org.springframework.security: TRACE

@@ -1,8 +1,11 @@
 package com.sweetshare.auth;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,5 +28,17 @@ class SecurityConfigTest {
         mockMvc.perform(get("/api/v1/auth/me"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.error.code").value("UNAUTHENTICATED"));
+    }
+
+    @Test
+    void postWithoutCsrfTokenReturns403WithErrorBody() throws Exception {
+        mockMvc.perform(post("/api/v1/posts")).andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error.code").value("CSRF_TOKEN_INVALID"));
+    }
+
+    @Test
+    void postWithCsrfTokenPassesCsrfCheck() throws Exception {
+        mockMvc.perform(post("/api/v1/posts").with(csrf()))
+                .andExpect(status().isUnauthorized());
     }
 }

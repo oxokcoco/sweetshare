@@ -10,13 +10,13 @@ public class SecurityConfig {
     private static final String[] PUBLIC_ENDPOINTS = { "/actuator/health" };
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, JsonAuthenticationEntryPoint authEntryPoint)
+    SecurityFilterChain securityFilterChain(HttpSecurity http, JsonAuthenticationEntryPoint authEntryPoint, JsonAccessDeniedHandler jsonAccessDeniedHandler)
             throws Exception {
         http.authorizeHttpRequests(
                 auth -> auth.requestMatchers(PUBLIC_ENDPOINTS).permitAll().anyRequest().authenticated())
                 .httpBasic(basic -> basic.disable())
                 .formLogin(form -> form.disable())
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint));
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint).accessDeniedHandler(jsonAccessDeniedHandler));
         return http.build();
     }
 }
