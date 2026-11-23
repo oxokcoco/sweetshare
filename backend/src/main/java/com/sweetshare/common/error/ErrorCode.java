@@ -8,7 +8,9 @@ public enum ErrorCode {
     FORBIDDEN(HttpStatus.FORBIDDEN, "Access denied"),
 
     EMAIL_TAKEN(HttpStatus.CONFLICT, "Email is already registered"),
-    USERNAME_TAKEN(HttpStatus.CONFLICT, "Username is already taken");
+    USERNAME_TAKEN(HttpStatus.CONFLICT, "Username is already taken"),
+    VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Request validation failed");
+
 
     private final HttpStatus status;
     private final String defaultMessage;

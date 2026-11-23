@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sweetshare.users.User;
 import com.sweetshare.users.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController {
@@ -21,7 +23,7 @@ class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    RegisterResponse register(@RequestBody RegisterRequest request) {
+    RegisterResponse register(@Valid @RequestBody RegisterRequest request) {
         User user = userService.register(request.email(), request.username(), request.password());
         return RegisterResponse.from(user);
     }

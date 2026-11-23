@@ -40,7 +40,7 @@ class AuthControllerTest {
     }
 
     private ResultActions register(String body) throws Exception {
-       return mockMvc.perform(
+        return mockMvc.perform(
                 post("/api/v1/auth/register")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,5 +59,37 @@ class AuthControllerTest {
         register(body)
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.error.code").value("EMAIL_TAKEN"));
+    }
+
+    @Test
+    void invalidEmail() throws Exception {
+        String body = jsonMapper.writeValueAsString(new RegisterRequest("not-an-email", "sTevEn", "Password123"));
+
+        register(body)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.error.details[0].field").value("email"));
+
+    }
+
+    @Test
+    void invalidUsername() throws Exception {
+        String body = jsonMapper.writeValueAsString(new RegisterRequest("SteVen@X.com", "ste ven", "Password123"));
+
+        register(body)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.error.details[0].field").value("username"));
+
+    }
+
+    @Test
+    void shortPassword() throws Exception {
+        String body = jsonMapper.writeValueAsString(new RegisterRequest("SteVen@X.com", "sTevEn", "short"));
+
+        register(body)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.error.details[0].field").value("password"));
     }
 }
