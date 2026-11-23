@@ -19,6 +19,7 @@ class CsrfControllerTest {
     @Test
     void anonymousUserCanFetchCsrfToken() throws Exception {
         mockMvc.perform(get("/api/v1/auth/csrf")).andExpect(status().isOk())
-                .andExpect(jsonPath("$.headerName").value("X-CSRF-TOKEN")).andExpect(jsonPath("$.token").isNotEmpty());
+                .andExpect(jsonPath("$.headerName").value("X-CSRF-TOKEN"))
+                .andExpect(jsonPath("$.token").isNotEmpty());
     }
 }

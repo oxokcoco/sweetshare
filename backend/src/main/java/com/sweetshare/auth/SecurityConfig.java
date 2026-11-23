@@ -9,7 +9,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-    private static final String[] PUBLIC_ENDPOINTS = { "/actuator/health", "/api/v1/auth/csrf" };
+    private static final String[] PUBLIC_ENDPOINTS = {
+            "/actuator/health",
+            "/api/v1/auth/csrf",
+            "/api/v1/auth/register"
+    };
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, JsonAuthenticationEntryPoint authEntryPoint,
@@ -24,7 +28,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean 
+    @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
