@@ -9,8 +9,13 @@ public enum ErrorCode {
 
     EMAIL_TAKEN(HttpStatus.CONFLICT, "Email is already registered"),
     USERNAME_TAKEN(HttpStatus.CONFLICT, "Username is already taken"),
-    VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Request validation failed");
+    VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Request validation failed")
 
+    MALFORMED_REQUEST(HttpStatus.BAD_REQUEST, "Malformed request body"),
+    NOT_FOUND(HttpStatus.NOT_FOUND, "Resource not found"),
+    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "Method not allowed"),
+    UNSUPPORTED_MEDIA_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Unsupported media type"),
+    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error");
 
     private final HttpStatus status;
     private final String defaultMessage;
